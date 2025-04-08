@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary branding colors -->
+    <color name="primary">#4CAF50</color> <!-- Green -->
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="primaryVariant">#388E3C</color>
+
+    <!-- Secondary/accent -->
+    <color name="secondary">#03DAC6</color>
+    <color name="onSecondary">#000000</color>
+
+    <!-- Backgrounds -->
+    <color name="background">#F5F5F5</color>
+    <color name="onBackground">#000000</color>
+
+    <!-- Surface (cards, buttons, sheets) -->
+    <color name="surface">#FFFFFF</color>
+    <color name="onSurface">#000000</color>
+
+    <!-- Error colors -->
+    <color name="error">#B00020</color>
+    <color name="onError">#FFFFFF</color>
+
+    <!-- Text Colors -->
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#757575</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray_500">#9E9E9E</color> <!-- Medium gray -->
+    <color name="green_700">#388E3C</color> <!-- Darker green -->
+    <color name="blue_accent_300">#4FC3F7</color>
+
+
+    <!-- Optional Material You Primary Colors -->
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryVariant">#3700B3</color>
+    <color name="colorSecondary">#03DAC6</color>
+</resources>
+

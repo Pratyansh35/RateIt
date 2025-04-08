@@ -1,0 +1,130 @@
+{
+  "project_info": {
+    "project_number": "252813628903",
+    "firebase_url": "https://myparawale-app-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "myparawale-app",
+    "storage_bucket": "myparawale-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252813628903:android:a9f061159f323890169942",
+        "android_client_info": {
+          "package_name": "com.parawale.GrocEase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252813628903-3fl84kpkpm7binajdmdrdtfa07u9cuov.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.parawale.GrocEase",
+            "certificate_hash": "b1e8f81dd81c4af30b66dc9a99db1ce38536350d"
+          }
+        },
+        {
+          "client_id": "252813628903-p8k8n4krnl4fogsi95j4jercvo67j259.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.parawale.GrocEase",
+            "certificate_hash": "21e3d3ff9400b6fe286abd513ccadb2230f6a7ba"
+          }
+        },
+        {
+          "client_id": "252813628903-1sa87q67q9fqc6iji9gkeqf1o13nfn59.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3t3RiKgh3l96HJ8XAsLpgSKPXf-p86sM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252813628903-1sa87q67q9fqc6iji9gkeqf1o13nfn59.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252813628903:android:3846c6c41ffeff0b169942",
+        "android_client_info": {
+          "package_name": "com.parawale.grocmerchants"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252813628903-jh7hjp35gdk11mihugpsmmaod1nl34l0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.parawale.grocmerchants",
+            "certificate_hash": "b1e8f81dd81c4af30b66dc9a99db1ce38536350d"
+          }
+        },
+        {
+          "client_id": "252813628903-1sa87q67q9fqc6iji9gkeqf1o13nfn59.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3t3RiKgh3l96HJ8XAsLpgSKPXf-p86sM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252813628903-1sa87q67q9fqc6iji9gkeqf1o13nfn59.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252813628903:android:14a4afcdea5ef01d169942",
+        "android_client_info": {
+          "package_name": "com.parawale.rateit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252813628903-ijh46no7qdog2a0t5oihflkar4j1usnl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.parawale.rateit",
+            "certificate_hash": "b1e8f81dd81c4af30b66dc9a99db1ce38536350d"
+          }
+        },
+        {
+          "client_id": "252813628903-1sa87q67q9fqc6iji9gkeqf1o13nfn59.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3t3RiKgh3l96HJ8XAsLpgSKPXf-p86sM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252813628903-1sa87q67q9fqc6iji9gkeqf1o13nfn59.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
