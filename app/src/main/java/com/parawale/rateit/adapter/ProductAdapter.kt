@@ -63,12 +63,14 @@ class ProductAdapter(private var productList: MutableList<Product>) :
             itemView.setOnClickListener {
                 val context = itemView.context
                 val intent = Intent(context, RatingActivity::class.java).apply {
+                    Log.d("ProductAdapter", "Product ID: ${product.price} - $product")
+
                     putExtra("productName", product.title)
                     putExtra("productPrice", product.price)
                     putExtra("productDescription", product.description)
                     putExtra("userPhone", product.createdBy ?: "Unknown")
                     putExtra("userEmail", product.createdBy ?: "Unknown")
-
+                    putExtra("productId", product.id)
                     // Pass product images as ArrayList<String>
                     putStringArrayListExtra("imageUrls", ArrayList(product.productImages))
                 }

@@ -16,7 +16,8 @@ data class Product(
     val rating: Rating = Rating( 0.0, 0),
     var invoiceImage: String? = null,
     var createdBy: String? = null,
-    val dateCreated: Long = System.currentTimeMillis()
+    val dateCreated: Long = System.currentTimeMillis(),
+    val reviews: Map<String, Review> = emptyMap()
 ) : Parcelable
 
 

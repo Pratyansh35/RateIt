@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:background="@android:color/white"
+    android:padding="16dp"
     tools:context=".RatingActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_margin="8dp"
         android:elevation="8dp"
         app:cardCornerRadius="20dp"
@@ -23,7 +23,7 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:fillViewport="true">
 
             <LinearLayout
@@ -65,7 +65,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_gravity="center_horizontal" />
 
-                <!-- Image Scroll -->
+                <!-- Product Images -->
                 <HorizontalScrollView
                     android:id="@+id/imageScrollContainer"
                     android:layout_width="match_parent"
@@ -82,7 +82,12 @@
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp" />
                 </HorizontalScrollView>
-
+                <LinearLayout
+                android:id="@+id/reviewFormContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
                 <!-- Product Description -->
                 <TextView
                     android:id="@+id/tvProductDescription"
@@ -93,7 +98,7 @@
                     android:textColor="@android:color/black"
                     android:layout_marginTop="16dp" />
 
-                <!-- Review Label -->
+                <!-- Review Section Title -->
                 <TextView
                     android:id="@+id/tvReviewLabel"
                     android:layout_width="wrap_content"
@@ -101,20 +106,19 @@
                     android:text="Submit your review"
                     android:textStyle="bold"
                     android:textSize="16sp"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="24dp"
+                    android:textColor="@android:color/black" />
 
                 <!-- Rating Bar -->
+
+                <!-- Review EditText -->
                 <RatingBar
                     android:id="@+id/ratingBar"
-                    style="?android:attr/ratingBarStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:numStars="5"
-                    android:stepSize="0.5"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp" />
+                    android:stepSize="0.5" />
 
-                <!-- Review EditText -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -142,8 +146,33 @@
                     android:textStyle="bold"
                     android:backgroundTint="@android:color/holo_purple"
                     android:textColor="@android:color/white"
-
                     android:elevation="4dp" />
+                </LinearLayout>
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- All Reviews Header -->
+                <TextView
+                    android:id="@+id/tvAllReviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All Reviews"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Dynamic Reviews Will Appear Here -->
+                <LinearLayout
+                    android:id="@+id/reviewsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
             </LinearLayout>
         </ScrollView>
     </androidx.cardview.widget.CardView>
