@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
@@ -89,7 +90,8 @@ class AddRatingActivity : AppCompatActivity() {
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             startActivityForResult(Intent.createChooser(intent, "Select Product Images"), PICK_PRODUCT_IMAGES_REQUEST)
         }
-
+        val currentUser = firebaseAuth.currentUser?.email ?: "Unknown"
+        Toast.makeText(this, "Current User: $currentUser", Toast.LENGTH_SHORT).show()
         btnSubmit.setOnClickListener {
             val title = etTitle.text.toString()
             val price = etPrice.text.toString().toDoubleOrNull() ?: 0.0
@@ -103,40 +105,59 @@ class AddRatingActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            showPhoneNumberDialog()
+            showPhoneNumberDialog(currentUser)
         }
     }
-    private fun showPhoneNumberDialog() {
-        val editText = EditText(this)
-        editText.inputType = InputType.TYPE_CLASS_PHONE
-        editText.hint = "Enter phone number"
+    private fun showPhoneNumberDialog(currentUser: String) {
+        val view = LayoutInflater.from(this).inflate(R.layout.dialog_phone_number, null)
+        val etPhoneInput = view.findViewById<EditText>(R.id.etPhoneInput)
 
-        AlertDialog.Builder(this)
-            .setTitle("Phone Verification")
-            .setMessage("Enter your mobile number to verify before submission")
-            .setView(editText)
-            .setPositiveButton("Send OTP") { _, _ ->
-                val number = editText.text.toString()
-                if (number.isNotBlank()) {
-                    sendOtp(number)
+        val dialog = AlertDialog.Builder(this)
+            .setView(view)
+            .setCancelable(false)
+            .setPositiveButton("Send OTP", null)
+            .setNegativeButton("Cancel", null)
+            .create()
+
+        dialog.setOnShowListener {
+            val button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            button.setOnClickListener {
+                val number = etPhoneInput.text.toString().trim()
+                if (number.length == 10) {
+                    dialog.dismiss()
+                    showSendingOtpDialog()
+                    sendOtp(number, currentUser)
                 } else {
-                    Toast.makeText(this, "Invalid phone number", Toast.LENGTH_SHORT).show()
+                    etPhoneInput.error = "Enter a valid 10-digit number"
                 }
             }
-            .setNegativeButton("Cancel", null)
-            .show()
+        }
+
+        dialog.show()
     }
-    private fun sendOtp(phoneNumber: String) {
+
+    private var sendingOtpDialog: ProgressDialog? = null
+
+    private fun showSendingOtpDialog() {
+        sendingOtpDialog = ProgressDialog(this).apply {
+            setMessage("Sending OTP, please wait...")
+            setCancelable(false)
+            show()
+        }
+    }
+    private fun sendOtp(phoneNumber: String,currentUser: String) {
         val options = PhoneAuthOptions.newBuilder(firebaseAuth)
             .setPhoneNumber("+91$phoneNumber")
             .setTimeout(60L, TimeUnit.SECONDS)
             .setActivity(this)
             .setCallbacks(object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                 override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                    signInWithPhoneAuthCredential(credential)
+                    sendingOtpDialog?.dismiss()
+                    signInWithPhoneAuthCredential(credential, currentUser)
                 }
 
                 override fun onVerificationFailed(e: FirebaseException) {
+                    sendingOtpDialog?.dismiss()
                     Toast.makeText(this@AddRatingActivity, "Verification failed: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
 
@@ -144,45 +165,57 @@ class AddRatingActivity : AppCompatActivity() {
                     verificationId: String,
                     token: PhoneAuthProvider.ForceResendingToken
                 ) {
+                    sendingOtpDialog?.dismiss()
                     this@AddRatingActivity.verificationId = verificationId
-                    showOtpDialog()
+                    showOtpDialog(currentUser)
                 }
             }).build()
 
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
-    private fun showOtpDialog() {
-        val editText = EditText(this)
-        editText.inputType = InputType.TYPE_CLASS_NUMBER
-        editText.hint = "Enter OTP"
 
-        AlertDialog.Builder(this)
-            .setTitle("Enter OTP")
-            .setView(editText)
-            .setPositiveButton("Verify") { _, _ ->
-                val otp = editText.text.toString()
-                verificationId?.let {
-                    val credential = PhoneAuthProvider.getCredential(it, otp)
-                    signInWithPhoneAuthCredential(credential)
+    private fun showOtpDialog(currentUser: String) {
+        val view = LayoutInflater.from(this).inflate(R.layout.dialog_otp_verification, null)
+        val etOtpInput = view.findViewById<EditText>(R.id.etOtpInput)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(view)
+            .setCancelable(false)
+            .setPositiveButton("Verify", null)
+            .setNegativeButton("Cancel", null)
+            .create()
+
+        dialog.setOnShowListener {
+            val button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            button.setOnClickListener {
+                val otp = etOtpInput.text.toString().trim()
+                if (otp.length == 6 && verificationId != null) {
+                    val credential = PhoneAuthProvider.getCredential(verificationId!!, otp)
+                    dialog.dismiss()
+                    signInWithPhoneAuthCredential(credential, currentUser)
+                } else {
+                    etOtpInput.error = "Enter a valid 6-digit OTP"
                 }
             }
-            .setNegativeButton("Cancel", null)
-            .show()
+        }
+
+        dialog.show()
     }
-    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+
+    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential, currentUser: String) {
         loadingDialog.show()
         firebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    submitProduct()
+                    submitProduct(currentUser)
                 } else {
                     loadingDialog.dismiss()
                     Toast.makeText(this, "OTP verification failed", Toast.LENGTH_SHORT).show()
                 }
             }
     }
-    private fun submitProduct() {
+    private fun submitProduct(currentUser: String) {
         val title = etTitle.text.toString()
         val price = etPrice.text.toString().toDoubleOrNull() ?: 0.0
         val description = etDescription.text.toString()
@@ -200,7 +233,8 @@ class AddRatingActivity : AppCompatActivity() {
                 rating,
                 productImageUris,
                 invoiceUri,
-                context = this@AddRatingActivity
+                context = this@AddRatingActivity,
+                createdBy = currentUser
             )
 
             loadingDialog.dismiss()

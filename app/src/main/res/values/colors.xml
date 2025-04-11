@@ -15,7 +15,7 @@
 
     <!-- Surface (cards, buttons, sheets) -->
     <color name="surface">#FFFFFF</color>
-    <color name="onSurface">#000000</color>
+    <color name="onSurface">#4E4C4C</color>
 
     <!-- Error colors -->
     <color name="error">#B00020</color>

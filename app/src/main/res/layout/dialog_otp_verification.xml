@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter the OTP sent to your number"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:paddingBottom="8dp"
+        android:textColor="@color/primaryVariant"/>
+
+    <EditText
+        android:id="@+id/etOtpInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="6-digit OTP"
+        android:inputType="number"
+        android:maxLength="6"
+        android:background="@drawable/edittext_rounded_bg"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:textColor="@color/primaryVariant"/>
+</LinearLayout>

@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Review(
     val id: String = "",
-    val userId: String = "",
+    val reviewBy: String = "",
     val comment: String = "",
     val rating: Float = 0f,
     val date: Long = System.currentTimeMillis()

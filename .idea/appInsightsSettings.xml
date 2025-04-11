@@ -22,10 +22,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.parawale.rateit" />
+                  <option name="mobileSdkAppId" value="1:252813628903:android:14a4afcdea5ef01d169942" />
+                  <option name="projectId" value="myparawale-app" />
+                  <option name="projectNumber" value="252813628903" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -12,9 +12,9 @@ android {
 
     defaultConfig {
         applicationId = "com.parawale.rateit"
-        minSdk = 33
+        minSdk = 23
         targetSdk = 35
-        versionCode = 2
+        versionCode = 3
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -39,9 +39,8 @@ android {
 }
 
 dependencies {
-    implementation("com.google.android.material:material:1.11.0")
-
-    implementation("com.google.code.gson:gson:2.10")
+    implementation(libs.material.v1110)
+    implementation(libs.gson)
     implementation(libs.glide)
     implementation(libs.firebase.crashlytics.buildtools)
     implementation(libs.firebase.database.ktx)

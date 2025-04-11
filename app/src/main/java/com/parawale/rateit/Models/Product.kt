@@ -12,6 +12,7 @@ data class Product(
     val price: Double = 0.0,
     val description: String = "",
     val category: String = "",
+    val genuine: Boolean = false,
     val productImages: List<String> = emptyList(),
     val rating: Rating = Rating( 0.0, 0),
     var invoiceImage: String? = null,

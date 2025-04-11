@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(this, "Login successful.", Toast.LENGTH_SHORT).show()
-                        // Navigate to your main activity
+
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
                     } else {

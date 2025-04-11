@@ -5,9 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.parawale.rateit.Models.Product
 import com.parawale.rateit.R
@@ -44,39 +46,65 @@ class ProductAdapter(private var productList: MutableList<Product>) :
         private val tvProductPrice: TextView = itemView.findViewById(R.id.tvProductPrice)
         private val tvProductRating: TextView = itemView.findViewById(R.id.tvProductRating)
         private val ivProductImage: ImageView = itemView.findViewById(R.id.ivProductImage)
+        private val tvGenuineBadge: TextView = itemView.findViewById(R.id.tvGenuineBadge)
 
         fun bind(product: Product) {
-            // Safely get product image (productImages > invoiceImage > fallback)
             val imageUrl = product.productImages.firstOrNull() ?: product.invoiceImage
 
-            // Set values
             tvProductTitle.text = product.title
             tvProductPrice.text = "₹%.2f".format(product.price)
-            tvProductRating.text = "⭐ %.1f (%d)".format(product.rating.rate, product.rating.count)
+
+            // ✅ Correct dynamic rating calculation
+            val reviews = product.reviews.values.toList() ?: emptyList()
+            val validReviews = reviews.filter { it.rating > 0 }
+            val avgRating = if (validReviews.isNotEmpty()) validReviews.sumOf { it.rating.toDouble() } / validReviews.size else 0.0
+            val reviewCount = validReviews.size
+            tvProductRating.text = "⭐ %.1f (%d)".format(avgRating, reviewCount)
 
             Glide.with(itemView.context)
                 .load(imageUrl)
                 .placeholder(R.drawable.placeholder_image)
                 .into(ivProductImage)
 
-            // Handle click
+            tvGenuineBadge.apply {
+                text = if (product.genuine) "GENUINE" else "Not Verified"
+                setBackgroundResource(R.drawable.ribbon_background)
+                setBackgroundTintList(
+                    ContextCompat.getColorStateList(
+                        context,
+                        if (product.genuine) R.color.green_700 else R.color.error
+                    )
+                )
+
+                visibility = View.VISIBLE
+                alpha = 0f
+                scaleX = 0.8f
+                scaleY = 0.8f
+                animate()
+                    .alpha(1f)
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setDuration(350)
+                    .setInterpolator(DecelerateInterpolator())
+                    .start()
+            }
+
             itemView.setOnClickListener {
                 val context = itemView.context
                 val intent = Intent(context, RatingActivity::class.java).apply {
-                    Log.d("ProductAdapter", "Product ID: ${product.price} - $product")
-
                     putExtra("productName", product.title)
                     putExtra("productPrice", product.price)
                     putExtra("productDescription", product.description)
                     putExtra("userPhone", product.createdBy ?: "Unknown")
                     putExtra("userEmail", product.createdBy ?: "Unknown")
                     putExtra("productId", product.id)
-                    // Pass product images as ArrayList<String>
                     putStringArrayListExtra("imageUrls", ArrayList(product.productImages))
                 }
                 context.startActivity(intent)
             }
         }
+
+
     }
 
 }

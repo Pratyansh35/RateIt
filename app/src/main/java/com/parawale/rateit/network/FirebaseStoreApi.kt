@@ -88,22 +88,20 @@ object FirebaseStoreApi {
         rating: Double,
         productImageUris: List<Uri>,
         invoiceUri: Uri?,
-        context: Context
+        context: Context,
+        createdBy : String
     ): Product? = withContext(Dispatchers.IO) {
         try {
             val productImageUrls = productImageUris.map { uploadImage(it, "product_images", context) }
             val invoiceUrl = invoiceUri?.let { uploadImage(it, "invoices", context) }
 
-            val currentUser = FirebaseAuth.getInstance().currentUser
-            val createdBy = currentUser?.email ?: currentUser?.phoneNumber ?: currentUser?.uid ?: "Unknown"
-            val userId = currentUser?.uid ?: "unknown_user"
+
             val reviewId = database.push().key ?: UUID.randomUUID().toString()
 
             val firstReview = Review(
                 id = reviewId,
-                userId = userId,
-                comment =
-                ,
+                reviewBy = createdBy,
+                comment = description,
                 rating = rating.toFloat()
             )
 

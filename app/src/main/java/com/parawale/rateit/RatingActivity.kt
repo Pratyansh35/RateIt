@@ -109,9 +109,9 @@ class RatingActivity : AppCompatActivity() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         val currentUserEmail = currentUser?.email ?: return
 
-        // Check if the user already reviewed
-        val reviewRef = FirebaseDatabase.getInstance().getReference("rateit/reviews/$productId")
-        reviewRef.orderByChild("userId").equalTo(currentUserEmail)
+        val reviewRef = FirebaseDatabase.getInstance().getReference("rateit/$productId/reviews")
+
+        reviewRef.orderByChild("reviewBy").equalTo(currentUserEmail)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -134,7 +134,7 @@ class RatingActivity : AppCompatActivity() {
                             }
 
                             val reviewObj = Review(
-                                userId = currentUserEmail,
+                                reviewBy = currentUserEmail,
                                 comment = reviewText,
                                 rating = rating,
                                 date = System.currentTimeMillis()
@@ -158,10 +158,11 @@ class RatingActivity : AppCompatActivity() {
                 }
             })
     }
+
     private fun showAlreadySubmittedReview(review: Review?) {
         reviewFormContainer.visibility = View.GONE
         val reviewTextView = TextView(this).apply {
-            text = "\"${review?.comment}\" - ${review?.userId}"
+            text = "\"${review?.comment}\" - ${review?.reviewBy}"
             textSize = 16f
             setTextColor(Color.BLACK)
             setPadding(0, 24, 0, 8)
@@ -214,7 +215,7 @@ class RatingActivity : AppCompatActivity() {
                                 false
                             )
 
-                            reviewView.findViewById<TextView>(R.id.tvReviewerEmail).text = it.userId
+                            reviewView.findViewById<TextView>(R.id.tvReviewerEmail).text = it.reviewBy
                             reviewView.findViewById<RatingBar>(R.id.ratingBarSmall).rating =
                                 it.rating
                             reviewView.findViewById<TextView>(R.id.tvReviewText).text = it.comment

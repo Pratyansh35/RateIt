@@ -65,7 +65,7 @@ class HomeActivity : AppCompatActivity() {
         val currentUser = FirebaseAuth.getInstance().currentUser
 
         currentUser?.let {
-            tvUserName.text = "Welcome, ${it.displayName ?: "User"}"
+            tvUserName.text = "Welcome, ${it.displayName ?: ""}"
             tvUserEmail.text = it.email ?: ""
         }
 
